@@ -30,6 +30,12 @@ cmap = [1 1 1; ...
 
 colormap(cmap);
 
+% Color variables for the map
+OBSTACLE_CELL   = 2; % Black
+VISITED_CELL    = 3; % Red
+BLUE_CELL       = 4; % Blue
+START_CELL      = 5; % Green
+
 % variable to control if the map is being visualized on every
 % iteration
 drawMapEveryTime = true;
@@ -68,8 +74,8 @@ H = H';
 f = Inf(nrows,ncols);
 g = Inf(nrows,ncols);
 
-g(start_node) = 0;
-f(start_node) = H(start_node);
+g(start_node) = 0;              % Distance between node and start node
+f(start_node) = H(start_node);  % g+H(node)
 
 % keep track of the number of nodes that are expanded
 numExpanded = 0;
@@ -109,11 +115,57 @@ while true
     % ALL YOUR CODE BETWEEN THESE LINES OF STARS
     % Visit all of the neighbors around the current node and update the
     % entries in the map, f, g and parent arrays
-    %
     
     
+    % Left Neighbour
+    if (j>1 && j<=ncols)
+        colNeighbour = j-1;
+        rowNeighbour = i;
+        if (map(rowNeighbour,colNeighbour)~=OBSTACLE_CELL && map(rowNeighbour,colNeighbour)~=VISITED_CELL && map(rowNeighbour,colNeighbour)~=START_CELL)
+            map(rowNeighbour,colNeighbour) = BLUE_CELL;
+            parent(rowNeighbour,colNeighbour) = current;
+            g(rowNeighbour,colNeighbour) = g(current)+1;
+            f(rowNeighbour,colNeighbour) = g(rowNeighbour,colNeighbour) + H(rowNeighbour,colNeighbour);
+        end
+    end
     
+    % Right Neighbour
+    if (j>=1 && j<ncols)
+        colNeighbour =j+1;
+        rowNeighbour = i;
+        if (map(rowNeighbour,colNeighbour)~=OBSTACLE_CELL && map(rowNeighbour,colNeighbour)~=VISITED_CELL && map(rowNeighbour,colNeighbour)~=START_CELL)
+            map(rowNeighbour,colNeighbour) = BLUE_CELL;
+            parent(rowNeighbour,colNeighbour) = current;
+            g(rowNeighbour,colNeighbour) = g(current)+1;
+            f(rowNeighbour,colNeighbour) = g(rowNeighbour,colNeighbour) + H(rowNeighbour,colNeighbour);
+        end
+    end
     
+    % Up Neighbour
+    if (i>1 && i<=nrows)
+        rowNeighbour = i-1;
+        colNeighbour = j;
+        if (map(rowNeighbour,colNeighbour)~=OBSTACLE_CELL && map(rowNeighbour,colNeighbour)~=VISITED_CELL && map(rowNeighbour,colNeighbour)~=START_CELL)
+            map(rowNeighbour,colNeighbour) = BLUE_CELL;
+            parent(rowNeighbour,colNeighbour) = current;
+            g(rowNeighbour,colNeighbour) = g(current)+1;
+            f(rowNeighbour,colNeighbour) = g(rowNeighbour,colNeighbour) + H(rowNeighbour,colNeighbour);
+        end
+    end
+    
+    % Down Neighbour
+    if (i>=1 && i<nrows)
+        rowNeighbour = i+1;
+        colNeighbour = j;
+        if (map(rowNeighbour,colNeighbour)~=OBSTACLE_CELL && map(rowNeighbour,colNeighbour)~=VISITED_CELL && map(rowNeighbour,colNeighbour)~=START_CELL)
+            map(rowNeighbour,colNeighbour) = BLUE_CELL;
+            parent(rowNeighbour,colNeighbour) = current;
+            g(rowNeighbour,colNeighbour) = g(current)+1;
+            f(rowNeighbour,colNeighbour) = g(rowNeighbour,colNeighbour) + H(rowNeighbour,colNeighbour);
+        end
+    end
+    
+    numExpanded = numExpanded + 1;    
     
     %*********************************************************************
     

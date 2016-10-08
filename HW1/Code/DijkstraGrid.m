@@ -36,7 +36,7 @@ colormap(cmap);
 % Color variables for the map
 OBSTACLE_CELL   = 2; % Black
 VISITED_CELL    = 3; % Red
-BLUE_CELL = 4; % Blue
+BLUE_CELL       = 4; % Blue
 START_CELL      = 5; % Green
 
 
