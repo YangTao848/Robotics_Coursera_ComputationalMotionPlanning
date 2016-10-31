@@ -34,10 +34,12 @@ cmap = [1 1 1; ...
 colormap(cmap);
 
 % Color variables for the map
+FREE_CELL       = 1; % White
 OBSTACLE_CELL   = 2; % Black
 VISITED_CELL    = 3; % Red
 BLUE_CELL       = 4; % Blue
 START_CELL      = 5; % Green
+DEST_CELL       = 6; % Yellow
 
 
 % variable to control if the map is being visualized on every
@@ -49,15 +51,15 @@ drawMapEveryTime = true;
 % map - a table that keeps track of the state of each grid cell
 map = zeros(nrows,ncols);
 
-map(~input_map) = 1;   % Mark free cells
-map(input_map)  = 2;   % Mark obstacle cells
+map(~input_map) = FREE_CELL ;   % Mark free cells
+map(input_map)  = OBSTACLE_CELL;   % Mark obstacle cells
 
 % Generate linear indices of start and dest nodes
 start_node = sub2ind(size(map), start_coords(1), start_coords(2));
 dest_node  = sub2ind(size(map), dest_coords(1),  dest_coords(2));
 
-map(start_node) = 5;
-map(dest_node)  = 6;
+map(start_node) = START_CELL;
+map(dest_node)  = DEST_CELL;
 
 % Initialize distance array
 distanceFromStart = Inf(nrows,ncols);
@@ -69,13 +71,12 @@ distanceFromStart(start_node) = 0;
 
 % keep track of number of nodes expanded 
 numExpanded = 0;
-
 % Main Loop
 while true
     
     % Draw current map
-    map(start_node) = 5;
-    map(dest_node) = 6;
+    map(start_node) = START_CELL;
+    map(dest_node)  = DEST_CELL;
     
     % make drawMapEveryTime = true if you want to see how the 
     % nodes are expanded on the grid. 
@@ -84,6 +85,7 @@ while true
         grid on;
         axis image;
         drawnow;
+        pause(0.1);
     end
     
     % Find the node with the minimum distance

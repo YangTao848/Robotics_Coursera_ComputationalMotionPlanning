@@ -1,7 +1,6 @@
 %
 % TestScript for Assignment 1
 %
-close all
 clear all
 clc
 %% Define a small map
