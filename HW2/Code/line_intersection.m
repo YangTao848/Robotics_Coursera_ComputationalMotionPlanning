@@ -2,6 +2,8 @@ function flag = line_intersection(P1, P2, P3, P4)
 
 % Line intersection test : returns true if the line segments intersects 
 % each other and false otherwise
+
+% The code was implemented based on the theory explained in the link below:
 % https://www.topcoder.com/community/data-science/data-science-tutorials/geometry-concepts-line-intersection-and-its-applications/#line_line_intersection
 
 

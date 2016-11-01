@@ -31,27 +31,27 @@ cmap = [1 1 1; ...
 colormap(cmap);
 
 % Color variables for the map
-FREE_CELL       = 1; % White
-OBSTACLE_CELL   = 2; % Black
-VISITED_CELL    = 3; % Red
-BLUE_CELL       = 4; % Blue
-START_CELL      = 5; % Green
-DEST_CELL       = 6; % Yellow
+FREE_CELL_COLOR       = 1; % White
+OBSTACLE_CELL_COLOR   = 2; % Black
+VISITED_CELL_COLOR    = 3; % Red
+BLUE_CELL             = 4; % Blue
+START_CELL_COLOR      = 5; % Green
+DEST_CELL_COLOR       = 6; % Yellow
 
 [nrows, ncols] = size(input_map);
 
 % map - a table that keeps track of the state of each grid cell
 map = zeros(nrows,ncols);
 
-map(~input_map) = FREE_CELL;  % Mark free cells
-map(input_map)  = OBSTACLE_CELL;  % Mark obstacle cells
+map(~input_map) = FREE_CELL_COLOR;      % Mark free cells
+map(input_map)  = OBSTACLE_CELL_COLOR;  % Mark obstacle cells
 
 % Generate linear indices of start and dest nodes
 start_node = sub2ind(size(map), start_coords(1), start_coords(2));
 dest_node  = sub2ind(size(map), dest_coords(1),  dest_coords(2));
 
-map(start_node) = START_CELL;
-map(dest_node)  = DEST_CELL;
+map(start_node) = START_CELL_COLOR;
+map(dest_node)  = DEST_CELL_COLOR;
 
 % Initialize distance array
 distances = Inf(nrows,ncols);
@@ -60,13 +60,13 @@ distances = Inf(nrows,ncols);
 parent = zeros(nrows,ncols);
 
 distances(start_node) = 0;
-
+fahad = 0;
 % Main Loop
 while true
     
     % Draw current map
-    map(start_node) = START_CELL;
-    map(dest_node)  = DEST_CELL;
+    map(start_node) = START_CELL_COLOR;
+    map(dest_node)  = DEST_CELL_COLOR;
     
     image(1.5, 1.5, map);
     grid on;
@@ -75,7 +75,7 @@ while true
     
     % Find the node with the minimum distance
     [min_dist, current] = min(distances(:));
-    
+    fahad = fahad + 1;
     if ((current == dest_node) || isinf(min_dist))
         break;
     end;
@@ -151,7 +151,7 @@ else
 end
 
     function update (i,j,d,p)
-        if ( (map(i,j) ~= OBSTACLE_CELL) && (map(i,j) ~= VISITED_CELL) && (map(i,j) ~= START_CELL) && (distances(i,j) > d) )
+        if ( (map(i,j) ~= OBSTACLE_CELL_COLOR) && (map(i,j) ~= VISITED_CELL_COLOR) && (map(i,j) ~= START_CELL_COLOR) && (distances(i,j) > d) )
             distances(i,j) = d;
             map(i,j) = BLUE_CELL;
             parent(i,j) = p;

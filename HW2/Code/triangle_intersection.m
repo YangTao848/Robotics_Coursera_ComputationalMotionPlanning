@@ -30,6 +30,6 @@ end
 
 end
     
-
+% This function was implemented based on the theories found below:
 % http://math.stackexchange.com/questions/274712/calculate-on-which-side-of-straign-line-is-dot-located
 % http://stackoverflow.com/questions/2778240/detection-of-triangle-collision-in-2d-space/2778252
