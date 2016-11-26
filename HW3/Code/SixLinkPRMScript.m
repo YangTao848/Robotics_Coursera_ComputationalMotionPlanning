@@ -1,7 +1,8 @@
 %
 % SixLinkPRMScript.
 %
-
+clear all
+close all
 
 %% Drawing the robot
 figure;
@@ -13,15 +14,8 @@ fv = SixLinkRobot ([-120 120 -120 120 -120 60]);
 
 fv2 = SixLinkRobot ([0 0 0 0 0 180]);
 
-
-p = patch (fv);
-
-p.FaceColor = 'red';
-p.EdgeColor = 'none';
-
-p2 = patch(fv2);
-p2.FaceColor = 'green';
-p2.EdgeColor = 'none';
+p = patch (fv,'FaceColor','red','EdgeColor','none');
+p2 = patch (fv2,'FaceColor','green','EdgeColor','none');
 
 sz = 30;
 axis equal;
@@ -45,7 +39,7 @@ roadmap = PRM (@()(RandomSampleSixLink(obstacle)), @DistSixLink, @(x,y)(LocalPla
 %% Add nodes
 
 roadmap2 = AddNode2PRM ([240 120 240 120 240 60]', roadmap, @DistSixLink, @(x,y)(LocalPlannerSixLink(x,y,obstacle)), neighbors);
-roadmap2 = AddNode2PRM ([0 0 0 0 0 180]', roadmap2, @DistSixLink, @(x,y)(LocalPlannerSixLink(x,y,obstacle)), neighbors);
+roadmap2 = AddNode2PRM ([0 0 0 0 0 0]', roadmap2, @DistSixLink, @(x,y)(LocalPlannerSixLink(x,y,obstacle)), neighbors);
 
 %% Plan a route
 
@@ -72,17 +66,20 @@ for i = 2:length(route)
     for j = 0:n
         
         x = mod(x1 + (j/n)*delta, 360);
-        
+        clf('reset')
         fv = SixLinkRobot (x);
-        
+        patch (fv,'FaceColor','red','EdgeColor','none');
         p.Vertices = fv.vertices;
+        p2 = patch (fv2,'FaceColor','green','EdgeColor','none');
+        axis equal;
+        axis (sz*[-1 1 -1 1]);
+        patch (obstacle);
         
-        drawnow;
         
         if (CollisionCheck(fv, obstacle))
             fprintf (1, 'Ouch\n');
         end
-        
+        pause(0.1)
     end
     
 end

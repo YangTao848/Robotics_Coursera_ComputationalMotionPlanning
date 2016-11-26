@@ -31,7 +31,7 @@ x = RandomSample();
 % of a point in configuration space.
 samples = repmat(x(:), 1, nsamples);
 
-% edges - an array with 2 rows each column has two integer entries
+% edges - an array with 2 columns each row has two integer entries
 % (i, j) which encodes the fact that sample i and sample j are connected
 % by an edge. For each 
 edges = zeros(nsamples*k, 2);
@@ -57,13 +57,21 @@ for i = 2:nsamples
     % distance between the new sample and each of the samples that has been
     % generated so far in the program.
     distances = Dist(x, samples(:,1:(i-1)));
-    
+    [sorted_distances, sorted_indexes] = sort(distances);
+  
     %%% YOUR CODE HERE
     %
     % Find the closest k samples, use the LocalPlanner function to see if
     % you can forge an edge to any of these samples and update the edges,
     % edge_lengths and nedges variables accordingly.
     %
+    for j = 1:min(k,length(sorted_distances))
+        if (LocalPlanner(x, samples(:,sorted_indexes(j))))
+            nedges = nedges + 1;
+            edge_lengths(nedges) = sorted_distances(j);
+            edges(nedges, :) = [i, sorted_indexes(j)];
+        end
+    end
     
     fprintf (1, 'nsamples = %d, nedges = %d\n', i, nedges);
    

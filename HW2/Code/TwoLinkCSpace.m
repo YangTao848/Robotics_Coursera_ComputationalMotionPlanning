@@ -77,10 +77,10 @@ title ('Configuration Space');
 figure(2);
 
 % You should experiment by changing these coordinates
-start_x = 310;
-start_y = 64;
-end_x   = 76;
-end_y   = 12;
+start_x = 2;%310;
+start_y = 2;%64;
+end_x   = 320;%76;
+end_y   = 10;%12;
 
 % To make the process faster, we took 180 values of Thetas,
 % ranging from 0 to 360 with a step of 2.
